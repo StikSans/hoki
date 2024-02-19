@@ -1,0 +1,11 @@
+.button {
+    @apply px-[12px]
+    py-[5px]
+    mt-[15px]
+    rounded-lg
+    bg-[#0041F9]
+    text-zinc-50
+    transition
+    hover:opacity-[.7]
+
+}
