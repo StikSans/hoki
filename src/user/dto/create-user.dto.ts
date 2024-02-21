@@ -7,4 +7,5 @@ export class CreateUserDto {
     readonly sex: string
     readonly password: string
     readonly date: any
+    readonly country_id: string
 }

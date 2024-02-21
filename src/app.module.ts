@@ -19,7 +19,8 @@ import {Country} from "./country/country.model";
           database: 'hoki',
           models: [Role, User, Country],
           autoLoadModels: true,
-          synchronize: true
+          synchronize: true,
+          logging: false
       }),
       UserModule,
       RoleModule,

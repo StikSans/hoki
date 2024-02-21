@@ -1,6 +1,7 @@
 import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
-import {DataTypes} from "sequelize";
+
 import {Role} from "../role/role.model";
+import {Country} from "../country/country.model";
 
 
 interface CreateUserAttrs {
@@ -10,6 +11,7 @@ interface CreateUserAttrs {
     sex: string
     password: string
     date: any
+    country_id: string
 }
 
 @Table({tableName:'users', deletedAt:'destroyTime', paranoid:true})
@@ -41,5 +43,12 @@ export class User extends Model<User, CreateUserAttrs> {
 
     @ForeignKey(() => Role)
     @Column({type: DataType.INTEGER, allowNull:false, defaultValue: 1})
-    role_id:string
+    role_id: number
+
+    @BelongsTo(() => Country)
+    country: Country
+
+    @ForeignKey(() => Country)
+    @Column({type: DataType.INTEGER})
+    country_id: number
 }

@@ -1,4 +1,5 @@
-import {Column, DataType, Model, Table} from "sequelize-typescript";
+import {Column, DataType, HasMany, Model, Table} from "sequelize-typescript";
+import {User} from "../user/user.model";
 
 
 interface CreateCountryAttrs {
@@ -13,5 +14,8 @@ export class Country extends Model<Country, CreateCountryAttrs>{
 
     @Column({type:DataType.STRING, allowNull:false})
     country: string
+
+    @HasMany(() => User)
+    user: User[]
 
 }
