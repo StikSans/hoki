@@ -1,27 +1,29 @@
 import { Module } from '@nestjs/common';
-import {SequelizeModule} from "@nestjs/sequelize";
 import { UserModule } from './user/user.module';
+
 import {User} from "./user/user.model";
-import { CountriyModule } from './countriy/countriy.module';
 import { RoleModule } from './role/role.module';
 import {Role} from "./role/role.model";
+import { CountryModule } from './country/country.module';
+import {SequelizeModule} from "@nestjs/sequelize";
+import {Country} from "./country/country.model";
 
 @Module({
   imports: [
       SequelizeModule.forRoot({
-        dialect: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: 'root',
-        database: 'hoki',
-        models: [User, Role],
+          dialect: 'mysql',
+          host: 'localhost',
+          username: 'root',
+          password: 'root',
+          port: 3306,
+          database: 'hoki',
+          models: [Role, User, Country],
           autoLoadModels: true,
           synchronize: true
       }),
       UserModule,
-      CountriyModule,
-      RoleModule
+      RoleModule,
+      CountryModule
   ],
   controllers: [],
   providers: [],
