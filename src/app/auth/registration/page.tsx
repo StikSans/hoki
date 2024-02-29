@@ -1,14 +1,12 @@
-'use client'
-import FormRegistration from "@/components/Registration/FormRegistration/FormRegistration";
-import BlockRegistration from "@/components/Registration/BlockRegistration/BlockRegistration";
+"use client"
+import RegForm from "@/components/Registration/RegForm/RegForm"
 
 const RegistrationPage = () => {
-    return (
-        <section>
-            <FormRegistration/>
-            <BlockRegistration/>
-        </section>
-    )
+  return (
+    <div>
+      <RegForm />
+    </div>
+  )
 }
 
 export default RegistrationPage

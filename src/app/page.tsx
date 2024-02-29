@@ -1,10 +1,7 @@
-'use client'
+"use client"
 
 const Home = () => {
-  return (
-    <div>
-
-    </div>
-  );
+  const test = 5
+  return <div></div>
 }
- export default Home
+export default Home

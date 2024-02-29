@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+i {
+    @apply inline-block text-[22px] h-[22px];
+}

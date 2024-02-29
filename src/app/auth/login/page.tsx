@@ -1,16 +1,12 @@
-'use client'
-
-import FormLogin from "@/components/Login/FormLogin/FormLogin";
-import BlockRegLogin from "@/components/Login/BlockRegLogin/BlockRegLogin";
-
+"use client"
+import LoginForm from "@/components/Login/LoginForm/LoginForm"
 
 const LoginPage = () => {
-
-    return (
-        <main>
-            <FormLogin/>
-            <BlockRegLogin/>
-        </main>
-    )
+  return (
+    <div>
+      <LoginForm />
+    </div>
+  )
 }
+
 export default LoginPage
