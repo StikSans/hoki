@@ -7,6 +7,7 @@ import {Role} from "./role/role.model";
 import { CountryModule } from './country/country.module';
 import {SequelizeModule} from "@nestjs/sequelize";
 import {Country} from "./country/country.model";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import {Country} from "./country/country.model";
       }),
       UserModule,
       RoleModule,
-      CountryModule
+      CountryModule,
+      AuthModule
   ],
   controllers: [],
   providers: [],
