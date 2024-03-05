@@ -3,10 +3,11 @@ import { Image, Navbar, NavbarBrand } from "@nextui-org/react"
 
 const Header = () => {
   return (
-    <Navbar isBordered>
+    <Navbar>
       <Container>
         <NavbarBrand>
-          <Image src={"/logo.svg"} width={100} radius={"none"} />
+          <Image src={"/sync.svg"} width={40} radius={"none"} />
+          <div className="font-bold text-lg ml-3">sync</div>
         </NavbarBrand>
       </Container>
     </Navbar>

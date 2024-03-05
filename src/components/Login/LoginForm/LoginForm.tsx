@@ -1,3 +1,4 @@
+"use client"
 import {
   Button,
   Card,
@@ -9,9 +10,17 @@ import {
 import { SyntheticEvent, useState } from "react"
 import Link from "next/link"
 import Container from "@/components/global/Container/Container"
+import { SubmitHandler, useForm } from "react-hook-form"
+
+interface IFormInput {
+  login: string
+  password: string
+}
 
 const LoginForm = () => {
   const [typeValue, setTypeValue] = useState<"password" | "text">("password")
+
+  const { register, handleSubmit } = useForm<IFormInput>()
 
   const renameType = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -21,6 +30,7 @@ const LoginForm = () => {
       setTypeValue("password")
     }
   }
+  const onSubmit: SubmitHandler<IFormInput> = (date: object) => console.log(date)
 
   return (
     <Container>
@@ -29,20 +39,31 @@ const LoginForm = () => {
           <h2 className="text-2xl font-bold">Войти в аккаунт</h2>
         </CardHeader>
         <CardBody>
-          <form action="" className="flex flex-col gap-3">
-            <Input type="email" label="Электроная почта" />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            action=""
+            className="flex flex-col gap-3"
+          >
+            <Input
+              type="email"
+              label="Электроная почта"
+              {...register("login")}
+            />
             <Input
               type={typeValue}
               label="Пароль"
+              {...register("password")}
               endContent={
                 <button className="h-fit" onClick={renameType}>
                   <i
-                    className={`mr-2 text-default-400 fi fi-rr-eye${typeValue === "text" ? "-crossed" : ""}`}
+                    className={`mr-2 text-default-400 fi fi-rr-eye${
+                      typeValue === "text" ? "-crossed" : ""
+                    }`}
                   ></i>
                 </button>
               }
             />
-            <Button fullWidth={true} size="lg" color="primary">
+            <Button type="submit" fullWidth={true} size="lg" color="primary">
               Войти
             </Button>
           </form>
