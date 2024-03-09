@@ -7,10 +7,12 @@ import {
   CardHeader,
   Input,
 } from "@nextui-org/react"
-import { SyntheticEvent, useState } from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 import Link from "next/link"
 import Container from "@/components/global/Container/Container"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { useLoginUserMutation } from "@/lib/api/user"
+import { ILogin } from "@/model/ILogin.interface"
 
 interface IFormInput {
   login: string
@@ -21,6 +23,7 @@ const LoginForm = () => {
   const [typeValue, setTypeValue] = useState<"password" | "text">("password")
 
   const { register, handleSubmit } = useForm<IFormInput>()
+  const [loginUser, { data: user }] = useLoginUserMutation()
 
   const renameType = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -30,7 +33,16 @@ const LoginForm = () => {
       setTypeValue("password")
     }
   }
-  const onSubmit: SubmitHandler<IFormInput> = (date: object) => console.log(date)
+
+  useEffect(() => {
+    if (user) {
+      console.log(user)
+    }
+  }, [user])
+
+  const onSubmit: SubmitHandler<IFormInput> = async (date: ILogin) => {
+    await loginUser(date)
+  }
 
   return (
     <Container>
@@ -42,6 +54,7 @@ const LoginForm = () => {
           <form
             onSubmit={handleSubmit(onSubmit)}
             action=""
+            method="post"
             className="flex flex-col gap-3"
           >
             <Input

@@ -1,7 +1,15 @@
-"use client"
+import PostContainer from "@/components/Home/Post/PostContainer"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Новости",
+}
 
 const Home = () => {
-  const test = 5
-  return <div></div>
+  return (
+    <section>
+      <PostContainer />
+    </section>
+  )
 }
 export default Home

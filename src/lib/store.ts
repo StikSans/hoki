@@ -1,13 +1,13 @@
+import { api } from './api/index.api';
 import { configureStore } from "@reduxjs/toolkit"
-import { countryApi } from "@/lib/api/caountry"
 import { setupListeners } from "@reduxjs/toolkit/query"
 
 export const store = configureStore({
   reducer: {
-    [countryApi.reducerPath]: countryApi.reducer,
+    [api.reducerPath]: api.reducer
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(countryApi.middleware),
+    getDefaultMiddleware().concat(api.middleware),
 })
 
 setupListeners(store.dispatch)

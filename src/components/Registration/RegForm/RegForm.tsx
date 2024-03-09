@@ -10,10 +10,11 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react"
-import { regInputs, sex } from "./arrayTypeInput"
-import { useGetCountryQuery } from "@/lib/api/caountry"
+import { sex } from "./arrayTypeInput"
+import { useGetCountryQuery } from "@/lib/api/country.api"
 import Link from "next/link"
 import { SyntheticEvent, useState } from "react"
+import { ICountry } from "@/model/type.interface"
 
 export const RegForm = () => {
   const { data, isLoading, error } = useGetCountryQuery(null)
@@ -46,7 +47,8 @@ export const RegForm = () => {
               label="Придумайте пароль"
               endContent={
                 <button onClick={renameTypeInput}>
-                  <i className={`mr-2 text-default-400 fi fi-rr-eye${
+                  <i
+                    className={`mr-2 text-default-400 fi fi-rr-eye${
                       !typeBool ? "-crossed" : ""
                     }`}
                   ></i>
@@ -58,7 +60,8 @@ export const RegForm = () => {
               label="Повторите пароль"
               endContent={
                 <button onClick={renameTypeInputRes}>
-                  <i className={`mr-2 text-default-400 fi fi-rr-eye${
+                  <i
+                    className={`mr-2 text-default-400 fi fi-rr-eye${
                       !typeBoolRes ? "-crossed" : ""
                     }`}
                   ></i>
@@ -75,7 +78,7 @@ export const RegForm = () => {
 
             <Select className={"max-w-full "} label="Страна">
               {data ? (
-                data.map((el) => (
+                data.map((el: ICountry) => (
                   <SelectItem key={el.id} value={el.id}>
                     {el.country}
                   </SelectItem>

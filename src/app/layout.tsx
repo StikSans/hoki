@@ -13,7 +13,18 @@ export const metadata: Metadata = {
       rel: "icon",
       type: "image/svg",
       sizes: "16x16",
-      url: '/sync.svg'
+      url: "/sync.svg",
+    },
+    {
+      rel: "icon",
+      type: "image/svg",
+      sizes: "32x32",
+      url: "/sync.svg",
+    },
+    {
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      url: "/sync.svg",
     },
   ],
 }
