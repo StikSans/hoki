@@ -22,13 +22,13 @@ export class AuthService {
     return null
   }
 
-  async register(regUserDto: CreateUserDto) {
+  async register(regUserDto: CreateUserDto, avatar: Express.Multer.File) {
     const candidate = await this.userService.findOne(regUserDto.login)
 
     if (candidate) {
       throw new HttpException('пользователь существует', HttpStatus.BAD_REQUEST)
     }
-    const user = await this.userService.create(regUserDto)
+    const user = await this.userService.create(regUserDto, avatar)
 
     return this.generateToken({ login: user.login, id: user.id })
   }

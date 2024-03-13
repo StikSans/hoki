@@ -1,8 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { CreateUserDto } from '../user/dto/create-user.dto'
 import { LocalStrategy } from './local.strategy'
 import { JwtStrategy } from './jwt.strategy'
+import { FileInterceptor } from '@nestjs/platform-express'
 
 @Controller('auth')
 export class AuthController {
@@ -22,8 +23,9 @@ export class AuthController {
   }
 
   @Post('registration')
-  async reg(@Body() regUserDto: CreateUserDto) {
-    return this.authService.register(regUserDto)
+  @UseInterceptors(FileInterceptor('avatar'))
+  async reg(@Body() regUserDto: CreateUserDto, @UploadedFile() avatar: Express.Multer.File) {
+    return this.authService.register(regUserDto, avatar)
   }
 
   // @UseGuards(JwtAuthGuard)
