@@ -3,13 +3,13 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
+  Req,
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  Req,
 } from '@nestjs/common'
-import {Request} from 'express'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
@@ -27,16 +27,30 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  profile(@Req() req: {user: {id:number}}) {
+  profile(@Req() req: { user: { id: number } }) {
     return this.userService.userById(req.user.id)
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Get('/login')
+  user(@Body() dto: CreateUserDto) {
+    return this.userService.findOne(dto.login)
+  }
+
   @Get('/:id')
   getOneUser(@Param('id') id: number) {
     return this.userService.userById(id)
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Patch()
+  @UseInterceptors(FileInterceptor('avatar'))
+  update(
+    @Body() dto: CreateUserDto,
+    @UploadedFile() avatar: Express.Multer.File,
+    @Req() req: {user: {id: number}},
+  ) {
+    return this.userService.updateUser(dto, avatar, req.user.id)
+  }
 
   @Post()
   @UseInterceptors(FileInterceptor('avatar'))

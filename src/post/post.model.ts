@@ -1,14 +1,17 @@
 import {
-  Table,
-  Model,
+  BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
-  HasMany,
-  BelongsTo,
   ForeignKey,
+  HasMany,
+  Model,
+  Table,
 } from 'sequelize-typescript'
 import { Img } from 'src/img/img.model'
 import { User } from 'src/user/user.model'
+import { Likes } from './likes.model'
+import { Coment } from '../coment/coment.model'
 
 interface CreatePostAttrs {
   id: number
@@ -30,10 +33,7 @@ export class Post extends Model<Post, CreatePostAttrs> {
   @Column({ type: DataType.STRING })
   text: string
 
-  @Column({ type: DataType.INTEGER, defaultValue: 0 })
-  likes: number
-
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, 'user_id')
   user: User
 
   @ForeignKey(() => User)
@@ -42,4 +42,10 @@ export class Post extends Model<Post, CreatePostAttrs> {
 
   @HasMany(() => Img)
   img: Img[]
+
+  @HasMany(() => Coment)
+  coment: Comment[]
+
+  @BelongsToMany(() => User, () => Likes, 'post_id')
+  user_likes: User[]
 }

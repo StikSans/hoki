@@ -22,7 +22,7 @@ export class AuthService {
     return null
   }
 
-  async register(regUserDto: CreateUserDto, avatar: Express.Multer.File) {
+  async register(regUserDto: CreateUserDto, avatar?: Express.Multer.File) {
     const candidate = await this.userService.findOne(regUserDto.login)
 
     if (candidate) {

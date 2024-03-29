@@ -1,19 +1,17 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
   Post,
-  Body,
-  UseInterceptors,
-  UploadedFile,
-  UploadedFiles,
   Req,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common'
 import { PostService } from './post.service'
 import { CreatePostDto } from './dto/create-post.dto'
-import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express'
-import { log } from 'console'
+import { AnyFilesInterceptor } from '@nestjs/platform-express'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('post')
@@ -30,6 +28,11 @@ export class PostController {
     return this.postService.getById(id)
   }
 
+  @Get('/user/:id')
+  findAllById(@Param('id') id: number) {
+    return this.postService.findAllById(id)
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(AnyFilesInterceptor())
@@ -40,9 +43,10 @@ export class PostController {
   ) {
     return this.postService.createPost(createDto, img, req.user.id)
   }
-  @Post('/img')
-  @UseInterceptors(AnyFilesInterceptor())
-  img(@UploadedFiles() img: Array<Express.Multer.File>) {
-    console.log(img)
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/:id/like')
+  like(@Param('id') postId: number, @Req() req: { user: { id: number } }) {
+    return this.postService.like(req.user.id, postId)
   }
 }
