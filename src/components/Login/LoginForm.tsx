@@ -13,6 +13,8 @@ import Container from "@/components/global/Container/Container"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useLoginUserMutation } from "@/lib/api/user"
 import { ILogin } from "@/model/ILogin.interface"
+import { setCookie } from "@/utils/cookie"
+import { useRouter } from "next/navigation"
 
 interface IFormInput {
   login: string
@@ -21,6 +23,7 @@ interface IFormInput {
 
 const LoginForm = () => {
   const [typeValue, setTypeValue] = useState<"password" | "text">("password")
+  const router = useRouter()
 
   const { register, handleSubmit } = useForm<IFormInput>()
   const [loginUser, { data: user }] = useLoginUserMutation()
@@ -36,7 +39,8 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(user)
+      setCookie("accetss", user.access_token)
+      router.push("/")
     }
   }, [user])
 
@@ -76,7 +80,7 @@ const LoginForm = () => {
                 </button>
               }
             />
-            <Button type="submit" fullWidth={true} size="lg" color="primary">
+            <Button type="submit" fullWidth size="lg" color="primary">
               Войти
             </Button>
           </form>

@@ -7,7 +7,7 @@ import { IPost } from "@/model/IPost.interface"
 import PostSkeleton from "@/components/Home/Post/PostSkeleton"
 
 const PostContainer = () => {
-  const { data: posts, error, isLoading } = useGetPostQuery(null)
+  const { data: posts, error, isLoading } = useGetPostQuery()
 
   return (
     <Container>
@@ -20,7 +20,10 @@ const PostContainer = () => {
             ))}
         </div>
       )}
-      <div>{posts && posts.map((post: IPost) => <PostItem post={post} />)}</div>
+      <div>
+        {posts &&
+          posts.map((post: IPost) => <PostItem key={post.id} post={post} />)}
+      </div>
     </Container>
   )
 }

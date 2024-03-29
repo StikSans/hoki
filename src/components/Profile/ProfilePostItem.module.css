@@ -1,0 +1,18 @@
+.swiperAdaptive {
+  margin: 0 auto;
+  @media (max-width: 1000px) {
+    width: 570px;
+  }
+  @media (max-width: 768px) {
+    width: 570px;
+  }
+  @media (max-width: 425px) {
+    width: 395px;
+  }
+  @media (max-width: 375px) {
+    width: 345px;
+  }
+  @media (max-width: 320px) {
+    width: 290;
+  }
+}

@@ -1,5 +1,5 @@
-"use client"
 import { url } from "@/lib/api/config"
+import { useLikeMutation } from "@/lib/api/post"
 import { IPost } from "@/model/IPost.interface"
 import {
   Avatar,
@@ -11,29 +11,26 @@ import {
   Image,
   useDisclosure,
 } from "@nextui-org/react"
-import { useLikeMutation } from "@/lib/api/post"
-import { useGetUserByIdQuery } from "@/lib/api/user"
 import { Swiper, SwiperSlide } from "swiper/react"
-import styles from "./PostItem.module.css"
-
 import "swiper/css"
 import "swiper/css/pagination"
 import { Pagination } from "swiper/modules"
-import PostModal from "./PostModal"
+import PostModal from "../Home/Post/PostModal"
+import { useGetUserByIdQuery } from "@/lib/api/user"
+import styles from './ProfilePostItem.module.css'
 
 interface IPostItem {
   post: IPost
 }
 
-const PostItem = ({ post }: IPostItem) => {
+const ProfilePostItem = ({ post }: IPostItem) => {
+  const { data } = useGetUserByIdQuery()
   const { onOpen, isOpen, onOpenChange } = useDisclosure()
   const [like] = useLikeMutation()
-  const { data } = useGetUserByIdQuery()
 
   const handleLike = async (id: number) => {
     await like(id)
   }
-
   return (
     <>
       <Card className="max-w-[600px] mx-auto mb-3">
@@ -50,12 +47,13 @@ const PostItem = ({ post }: IPostItem) => {
             {`${post.user.name} ${post.user.sur_name}`}
           </h4>
         </CardHeader>
-        <CardBody className="gap-3 ">
-          {post.img?.length == 1 ? (
+        <CardBody className="gap-3">
+        {post.img?.length == 1 ? (
             <Image src={`${url}/${post.img[0].img}`} />
           ) : (
             <Swiper
               className={styles.swiperAdaptive}
+              // spaceBetween={10}
               slidesPerView={1}
               pagination={{
                 dynamicBullets: true,
@@ -63,7 +61,7 @@ const PostItem = ({ post }: IPostItem) => {
               modules={[Pagination]}
               breakpoints={{
                 320: {
-                  width: 280,
+                  width: 300,
                 },
                 375: {
                   width: 345,
@@ -87,7 +85,6 @@ const PostItem = ({ post }: IPostItem) => {
                 ))}
             </Swiper>
           )}
-
           {post.text && <p>{post.text}</p>}
         </CardBody>
         <CardFooter className="gap-3">
@@ -126,4 +123,4 @@ const PostItem = ({ post }: IPostItem) => {
   )
 }
 
-export default PostItem
+export default ProfilePostItem

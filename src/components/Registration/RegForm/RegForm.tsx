@@ -7,20 +7,38 @@ import {
   CardFooter,
   CardHeader,
   Input,
-  Select,
-  SelectItem,
 } from "@nextui-org/react"
-import { sex } from "./arrayTypeInput"
-import { useGetCountryQuery } from "@/lib/api/country.api"
 import Link from "next/link"
-import { SyntheticEvent, useState } from "react"
-import { ICountry } from "@/model/type.interface"
+import { SyntheticEvent, useEffect, useState } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { IRegInput, IRegistration } from "@/model/IRegister"
+import { useRegUserMutation } from "@/lib/api/user"
+import { setCookie } from "@/utils/cookie"
+import { useRouter } from "next/navigation"
 
 export const RegForm = () => {
-  const { data, isLoading, error } = useGetCountryQuery(null)
-
   const [typeBool, setTypeBool] = useState<boolean>(true)
   const [typeBoolRes, setTypeBoolRes] = useState<boolean>(true)
+  const [error, setError] = useState<boolean>(false)
+
+  const { register, handleSubmit } = useForm<IRegInput>()
+  const [regUser, { data: user }] = useRegUserMutation()
+  const router = useRouter()
+
+  const onHandleSubmit: SubmitHandler<IRegInput> = async (date: IRegInput) => {
+    if (date.password != date.res_password) {
+      throw setError(true)
+    }
+    delete date.res_password
+    await regUser(date)
+  }
+
+  useEffect(() => {
+    if (user) {
+      setCookie("accetss", user.access_token)
+      router.push("/")
+    }
+  }, [user])
 
   const renameTypeInput = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -38,11 +56,20 @@ export const RegForm = () => {
           <h2 className={"text-[25px]"}>Регистрация</h2>
         </CardHeader>
         <CardBody>
-          <form className="flex flex-col gap-3" action="">
-            <Input type="email" label="Электронная почта" />
-            <Input type="text" label="Фамилия" />
-            <Input type="text" label="Имя" />
+          <form
+            className="flex flex-col gap-3"
+            action="post"
+            onSubmit={handleSubmit(onHandleSubmit)}
+          >
             <Input
+              type="email"
+              label="Электронная почта"
+              {...register("login")}
+            />
+            <Input type="text" label="Фамилия" {...register("sur_name")} />
+            <Input type="text" label="Имя" {...register("name")} />
+            <Input
+              {...register("password")}
               type={typeBool ? "password" : "text"}
               label="Придумайте пароль"
               endContent={
@@ -56,6 +83,8 @@ export const RegForm = () => {
               }
             />
             <Input
+              isInvalid={error}
+              {...register("res_password")}
               type={typeBoolRes ? "password" : "text"}
               label="Повторите пароль"
               endContent={
@@ -68,7 +97,7 @@ export const RegForm = () => {
                 </button>
               }
             />
-            <Select className={"max-w-full"} label="Пол">
+            {/* <Select className={"max-w-full"} label="Пол">
               {sex.map((el) => (
                 <SelectItem key={el.text} value={el.value}>
                   {el.text}
@@ -89,9 +118,10 @@ export const RegForm = () => {
                 </SelectItem>
               )}
             </Select>
+            <Input type="file" />
 
-            <Input type="date" />
-            <Button size="lg" color={"primary"} fullWidth>
+            <Input type="date" /> */}
+            <Button type="submit" size="lg" color={"primary"} fullWidth>
               Зарегистрироваться
             </Button>
           </form>
