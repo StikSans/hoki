@@ -9,6 +9,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Image,
   Modal,
   ModalBody,
   ModalContent,
@@ -27,7 +28,16 @@ const CardUser = () => {
 
   const { data } = useGetUserByIdQuery()
   const { onOpen, isOpen, onOpenChange } = useDisclosure()
+  const {
+    onOpen: onOpenCardAvatar,
+    isOpen: isOpenCardAvatar,
+    onOpenChange: onOpenChangeCardAvatar,
+  } = useDisclosure()
   const [update] = useUpdateMutation()
+
+  const deleteAvatar = async () => {
+    await update({ avatar: null })
+  }
 
   const onSubmit = async () => {
     if (file) {
@@ -56,7 +66,18 @@ const CardUser = () => {
                   <DropdownItem key="uodate" onPress={onOpen}>
                     Изменить
                   </DropdownItem>
-                  <DropdownItem key="open">Посмотреть</DropdownItem>
+                  <DropdownItem key="open" onPress={onOpenCardAvatar}>
+                    Посмотреть
+                  </DropdownItem>
+                  {data.avatar && (
+                    <DropdownItem
+                      className="text-danger"
+                      key="delete"
+                      onClick={deleteAvatar}
+                    >
+                      Удалить
+                    </DropdownItem>
+                  )}
                 </DropdownMenu>
               </Dropdown>
               <div>
@@ -71,15 +92,39 @@ const CardUser = () => {
           )}
         </CardHeader>
       </Card>
+      {data?.avatar && (
+        <Modal
+          size="5xl"
+          placement="center"
+          onOpenChange={onOpenChangeCardAvatar}
+          isOpen={isOpenCardAvatar}
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader />
+                <ModalBody className="p-4">
+                  <Image src={`${url}/${data?.avatar}`} />
+                </ModalBody>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      )}
+
       <Modal placement="center" onOpenChange={onOpenChange} isOpen={isOpen}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader>Изменить фотографию</ModalHeader>
-              <form onSubmit={(e: SyntheticEvent<HTMLFormElement>) => {
-                e.preventDefault()
-                onSubmit()
-              }} method="post" className="flex flex-col gap-3">
+              <form
+                onSubmit={(e: SyntheticEvent<HTMLFormElement>) => {
+                  e.preventDefault()
+                  onSubmit()
+                }}
+                method="post"
+                className="flex flex-col gap-3"
+              >
                 <ModalBody>
                   <Uploader setFileProps={setFile} title="Добавте фото" />
                 </ModalBody>

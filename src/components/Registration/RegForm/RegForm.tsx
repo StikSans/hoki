@@ -11,7 +11,7 @@ import {
 import Link from "next/link"
 import { SyntheticEvent, useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { IRegInput, IRegistration } from "@/model/IRegister"
+import { IRegInput } from "@/model/IRegister"
 import { useRegUserMutation } from "@/lib/api/user"
 import { setCookie } from "@/utils/cookie"
 import { useRouter } from "next/navigation"
@@ -29,8 +29,8 @@ export const RegForm = () => {
     if (date.password != date.res_password) {
       throw setError(true)
     }
-    delete date.res_password
-    await regUser(date)
+    const { res_password: _, ...newDate } = date
+    await regUser(newDate)
   }
 
   useEffect(() => {
