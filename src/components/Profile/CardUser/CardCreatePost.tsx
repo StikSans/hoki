@@ -12,7 +12,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react"
-import ProfilePostContainer from "@/components/Profile/ProfilePostContainer"
+import ProfilePostContainer from "@/components/Profile/CardUser/ProfilePostContainer"
 import { useGetUserByIdQuery } from "@/lib/api/user"
 import { useCreatePostMutation, useFindAllPostByIdQuery } from "@/lib/api/post"
 import { Uploader } from "@/components/Ui/Uploader"

@@ -7,4 +7,6 @@ export interface IUser {
   password: string
   country_id: number
   role_id: number
+  date: string
+  sex: string
 }

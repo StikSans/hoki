@@ -24,8 +24,8 @@ const Header = () => {
 
   const logOut = async () => {
     setCookie("accetss", "")
-    setTimeout(() => router.push("/auth/login"), 300)
     await refetch()
+    setTimeout(() => router.push("/auth/login"), 300)
   }
 
   return (
@@ -47,8 +47,6 @@ const Header = () => {
             <Dropdown>
               <DropdownTrigger>
                 <Avatar
-                  // as={Link}
-                  // href="/user"
                   showFallback
                   name={data.name}
                   radius="full"
@@ -59,7 +57,9 @@ const Header = () => {
                 <DropdownItem key="user" as={Link} href="/user">
                   Личный кабинет
                 </DropdownItem>
-                <DropdownItem key="edit">Редактировать профиль</DropdownItem>
+                <DropdownItem key="edit" as={Link} href="/user/edit">
+                  Редактировать профиль
+                </DropdownItem>
                 <DropdownItem
                   key="LogOut"
                   onClick={logOut}

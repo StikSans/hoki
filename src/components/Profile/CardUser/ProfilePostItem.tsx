@@ -15,9 +15,9 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 import "swiper/css/pagination"
 import { Pagination } from "swiper/modules"
-import PostModal from "../Home/Post/PostModal"
+import PostModal from "../../Home/Post/PostModal"
 import { useGetUserByIdQuery } from "@/lib/api/user"
-import styles from './ProfilePostItem.module.css'
+import styles from "./ProfilePostItem.module.css"
 
 interface IPostItem {
   post: IPost
@@ -48,7 +48,7 @@ const ProfilePostItem = ({ post }: IPostItem) => {
           </h4>
         </CardHeader>
         <CardBody className="gap-3">
-        {post.img?.length == 1 ? (
+          {post.img?.length == 1 ? (
             <Image src={`${url}/${post.img[0].img}`} />
           ) : (
             <Swiper

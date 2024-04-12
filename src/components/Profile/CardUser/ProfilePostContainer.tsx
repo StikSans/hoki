@@ -2,7 +2,7 @@
 
 import PostSkeleton from "@/components/Home/Post/PostSkeleton"
 import { IPost } from "@/model/IPost.interface"
-import ProfilePostItem from "@/components/Profile/ProfilePostItem"
+import ProfilePostItem from "@/components/Profile/CardUser/ProfilePostItem"
 
 const ProfilePostContainer = ({
   posts,

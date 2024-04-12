@@ -17,7 +17,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react"
-import Container from "../global/Container/Container"
+import Container from "../../global/Container/Container"
 import { useGetUserByIdQuery, useUpdateMutation } from "@/lib/api/user"
 import { url } from "@/lib/api/config"
 import { Uploader } from "@/components/Ui/Uploader"
