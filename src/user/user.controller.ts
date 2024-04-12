@@ -47,7 +47,7 @@ export class UserController {
   update(
     @Body() dto: CreateUserDto,
     @UploadedFile() avatar: Express.Multer.File,
-    @Req() req: {user: {id: number}},
+    @Req() req: { user: { id: number } },
   ) {
     return this.userService.updateUser(dto, avatar, req.user.id)
   }

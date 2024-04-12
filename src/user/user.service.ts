@@ -21,15 +21,23 @@ export class UserService {
     return await this.userRepository.findOne({ where: { login } })
   }
 
-  async updateUser(dto: CreateUserDto, avatar: Express.Multer.File, id: number) {
+  async updateUser(
+    dto: CreateUserDto,
+    avatar: Express.Multer.File,
+    id: number,
+  ) {
     if (avatar) {
       const fileName = await this.fileService.saveFile(avatar)
       return await this.userRepository.update(
         { ...dto, avatar: fileName },
-        {where: {id}},
+        { where: { id } },
       )
     }
-    return await this.userRepository.update(dto, {where: {id}})
+    if (dto.password) {
+      const newDto = { ...dto, password: await bcrypt.hash(dto.password, 4) }
+      return await this.userRepository.update(newDto, { where: { id } })
+    }
+    return await this.userRepository.update(dto, { where: { id } })
   }
 
   async userById(id: number) {

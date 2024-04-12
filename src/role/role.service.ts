@@ -15,7 +15,4 @@ export class RoleService {
     async createRole(dto: CreateRoleDto) {
         return this.roleRepository.create(dto)
     }
-
-
-
 }
