@@ -12,7 +12,7 @@ import { User } from '../user/user.model'
 interface CreateComentAttrs {
   post_id: number
   text: string
-  user_id
+  user_id: number
 }
 
 @Table({ tableName: 'coment' })
