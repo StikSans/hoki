@@ -18,16 +18,16 @@ import {
   useDisclosure,
 } from "@nextui-org/react"
 import Container from "../../global/Container/Container"
-import { useGetUserByIdQuery, useUpdateMutation } from "@/lib/api/user"
-import { url } from "@/lib/api/config"
-import { Uploader } from "@/components/Ui/Uploader"
-import { SyntheticEvent, useState } from "react"
+import {useGetUserByIdQuery, useUpdateMutation} from "@/lib/api/user"
+import {url} from "@/lib/api/config"
+import {Uploader} from "@/components/Ui/Uploader"
+import {SyntheticEvent, useState} from "react"
 
 const CardUser = () => {
   const [file, setFile] = useState<File | null>(null)
 
-  const { data } = useGetUserByIdQuery()
-  const { onOpen, isOpen, onOpenChange } = useDisclosure()
+  const {data} = useGetUserByIdQuery()
+  const {onOpen, isOpen, onOpenChange} = useDisclosure()
   const {
     onOpen: onOpenCardAvatar,
     isOpen: isOpenCardAvatar,
@@ -36,7 +36,7 @@ const CardUser = () => {
   const [update] = useUpdateMutation()
 
   const deleteAvatar = async () => {
-    await update({ avatar: null })
+    await update({avatar: null})
   }
 
   const onSubmit = async () => {
@@ -64,11 +64,13 @@ const CardUser = () => {
                 </DropdownTrigger>
                 <DropdownMenu>
                   <DropdownItem key="uodate" onPress={onOpen}>
-                    Изменить
+                    {data.avatar ? 'Изменить' : 'Добавить'}
                   </DropdownItem>
-                  <DropdownItem key="open" onPress={onOpenCardAvatar}>
-                    Посмотреть
-                  </DropdownItem>
+                  {data.avatar && (
+                    <DropdownItem key="open" onPress={onOpenCardAvatar}>
+                      Посмотреть
+                    </DropdownItem>
+                  )}
                   {data.avatar && (
                     <DropdownItem
                       className="text-danger"
@@ -102,9 +104,9 @@ const CardUser = () => {
           <ModalContent>
             {(onClose) => (
               <>
-                <ModalHeader />
+                <ModalHeader/>
                 <ModalBody className="p-4">
-                  <Image src={`${url}/${data?.avatar}`} />
+                  <Image src={`${url}/${data?.avatar}`}/>
                 </ModalBody>
               </>
             )}
@@ -126,7 +128,7 @@ const CardUser = () => {
                 className="flex flex-col gap-3"
               >
                 <ModalBody>
-                  <Uploader setFileProps={setFile} title="Добавте фото" />
+                  <Uploader setFileProps={setFile} title="Добавте фото"/>
                 </ModalBody>
                 <ModalFooter>
                   <Button
