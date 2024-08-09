@@ -14,6 +14,8 @@ import { Country } from '../country/country.model'
 import { Post } from 'src/post/post.model'
 import { Likes } from '../post/likes.model'
 import { Coment } from '../coment/coment.model'
+import { Chat } from '../chat/chat.model'
+import { Message } from '../chat/message.model'
 
 interface CreateUserAttrs {
   login: string
@@ -79,4 +81,10 @@ export class User extends Model<User, CreateUserAttrs> {
 
   @BelongsToMany(() => Post, () => Likes, 'user_id')
   post_likes: Post[]
+
+  @HasMany(() => Chat)
+  chat: Chat[]
+
+  @HasMany(() => Message)
+  message: Message[]
 }

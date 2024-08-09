@@ -18,6 +18,9 @@ import { Img } from './img/img.model'
 import { Likes } from './post/likes.model'
 import { ComentModule } from './coment/coment.module'
 import { Coment } from './coment/coment.model'
+import { ChatModule } from './chat/chat.module'
+import { Chat } from './chat/chat.model'
+import { Message } from './chat/message.model'
 
 @Module({
   imports: [
@@ -26,12 +29,12 @@ import { Coment } from './coment/coment.model'
       host: 'localhost',
       username: 'root',
       password: 'root',
-      port: 8889,
+      port: 3306,
       database: 'sync',
-      models: [Role, User, Country, Post, Img, Likes, Coment],
+      models: [Role, User, Country, Post, Img, Likes, Coment, Chat, Message],
       autoLoadModels: true,
       synchronize: true,
-      // logging: false,
+      logging: false,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../src', 'public'),
@@ -44,6 +47,7 @@ import { Coment } from './coment/coment.model'
     FileModule,
     ImgModule,
     ComentModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [],

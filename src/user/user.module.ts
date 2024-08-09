@@ -9,10 +9,20 @@ import { Post } from 'src/post/post.model'
 import { FileModule } from 'src/file/file.module'
 import { AuthModule } from 'src/auth/auth.module'
 import { Likes } from '../post/likes.model'
+import { Message } from '../chat/message.model'
+import { Chat } from '../chat/chat.model'
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([User, Role, Country, Post, Likes]),
+    SequelizeModule.forFeature([
+      User,
+      Role,
+      Country,
+      Post,
+      Likes,
+      Chat,
+      Message,
+    ]),
     FileModule,
     forwardRef(() => AuthModule),
   ],
